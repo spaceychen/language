@@ -1,0 +1,54 @@
+[
+  {
+    "type": "dir",
+    "name": "concept",
+    "label": "concept",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "grammer",
+    "label": "grammer",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "divider"
+  },
+  {
+    "type": "dir",
+    "name": "structural",
+    "label": "structural",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "dymamic",
+    "label": "dymamic",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "parallel",
+    "label": "parallel",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "paradigm",
+    "label": "paradigm",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
+    "name": "global-objects",
+    "label": "global objects",
+    "collapsible": true,
+    "collapsed": false
+  }
+]
