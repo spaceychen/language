@@ -2,15 +2,19 @@ name: Deploy Rspress site to Github-Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main] # 当 main 分支有新的提交时触发
 
+  # 你可以在任何时候运行此工作流程，而无需等待 main 分支的新提交
   workflow_dispatch:
 
+# 设置 GITHUB_TOKEN 的权限，以允许部署到 GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# 同一时间只能进行一次部署，跳过正在运行和最新队列之间的运行队列
+# 建议：不要取消正在进行的运行，因为我们希望允许这些生产部署完成
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -20,21 +24,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # 检出代码
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Not needed if lastUpdated is not enabled
+          fetch-depth: 0 # 如果未启用 lastUpdated，则不需要拉取所有历史提交
+      # 设置 Node.js 环境
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: npm # 或 pnpm / yarn / bun
+      # 设置 GitHub Pages
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      # 安装依赖并构建
       - name: Install dependencies
-        run: npm ci
+        run: npm ci # 或 pnpm install / yarn install / bun install
+      # 构建 Rspress 站点
       - name: Build with Rspress
-        run: npm run build
+        run: npm run build # 执行package.script
+      # 部署构建物到GitHub Pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

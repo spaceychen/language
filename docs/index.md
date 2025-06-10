@@ -2,7 +2,7 @@
 pageType: home
 
 hero:
-  name: LangBook
+  name: language
   # text: A cool website!
   tagline: A booklet about programming languages.
   # actions:

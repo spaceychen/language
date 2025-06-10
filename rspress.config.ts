@@ -8,11 +8,10 @@ export default defineConfig({
   root: path.join(__dirname, 'docs'),
   title: 'LangBook',
   icon: '/rspress-icon.png',
-  // logo: {
-  // light: '/rspress-light-logo.png',
-  // dark: '/rspress-dark-logo.png',
-  // },
-  logoText: '',
+  logo: {
+    light: '/rspress-light-logo.png',
+    dark: '/rspress-dark-logo.png',
+  },
   head: [],
   markdown: {
     defaultWrapCode: true,
@@ -21,7 +20,8 @@ export default defineConfig({
   },
   route: {
     // These files will be excluded from the routing (support glob pattern)
-    exclude: ['src/**/*'],
+    // exclude: [],
+    include: ['docs/**/*.md'],
     cleanUrls: true,
   },
   // 构建配置项

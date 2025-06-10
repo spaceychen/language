@@ -46,7 +46,7 @@
   },
   {
     "type": "dir",
-    "name": "global-objects",
+    "name": "globalObjects",
     "label": "global objects",
     "collapsible": true,
     "collapsed": false
