@@ -5,19 +5,15 @@
   "author": {
     "name": "spaceychen",
     "email": "spaceychen@163.com",
-    "url": "https://imafee.github.io/"
+    "url": "https://spaceychen.github.io/"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:imafee/language.git"
+    "git": "git@github.com:spaceychen/language.git",
+    "url": "git@github.com/spaceychen/language"
   },
   "license": "MIT",
   "private": true,
-  "config": {
-    "builder": {
-      "repourl": "//github.com/spaceychen/language"
-    }
-  },
   "scripts": {
     "build": "rspress build",
     "check": "biome check --write",
@@ -27,15 +23,16 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "rspress": "^1.40.2"
+    "rspress": "^2.0.0-beta.6",
+    "rspress-plugin-mermaid": "^0.3.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@eslint/js": "^9.19.0",
-    "@types/node": "^18.11.17",
-    "eslint": "^9.19.0",
-    "globals": "^15.14.0",
-    "prettier": "^3.4.2",
-    "typescript-eslint": "^8.22.0"
+    "@eslint/js": "^9.25.1",
+    "@types/node": "^22.8.1",
+    "eslint": "^9.25.1",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.3",
+    "typescript-eslint": "^8.31.1"
   }
 }

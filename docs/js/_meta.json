@@ -4,12 +4,19 @@
     "name": "concept",
     "label": "concept",
     "collapsible": true,
-    "collapsed": false
+    "collapsed": true
   },
   {
     "type": "dir",
     "name": "grammer",
     "label": "grammer",
+    "collapsible": true,
+    "collapsed": false
+  },
+   {
+    "type": "dir",
+    "name": "type",
+    "label": "type",
     "collapsible": true,
     "collapsed": false
   },
@@ -43,12 +50,4 @@
     "label": "paradigm",
     "collapsible": true,
     "collapsed": false
-  },
-  {
-    "type": "dir",
-    "name": "globalObjects",
-    "label": "global objects",
-    "collapsible": true,
-    "collapsed": false
-  }
-]
+  }]

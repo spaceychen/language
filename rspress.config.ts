@@ -1,12 +1,12 @@
 import * as path from 'node:path';
 import { defineConfig } from 'rspress/config';
 import pkg from './package.json';
-const { license, author, config } = pkg;
+const { license, author,repository } = pkg;
 
 export default defineConfig({
   base: '/language/',
   root: path.join(__dirname, 'docs'),
-  title: 'LangBook',
+  title: 'language',
   icon: '/rspress-icon.png',
   logo: {
     light: '/rspress-light-logo.png',
@@ -44,7 +44,7 @@ export default defineConfig({
       {
         icon: 'github',
         mode: 'link',
-        content: 'https://github.com/spaceychen/language',
+        content: `${repository.url}`,
       },
     ],
     lastUpdated: true,
