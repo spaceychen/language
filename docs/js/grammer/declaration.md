@@ -1,6 +1,6 @@
 # 声明
 
-声明的作用
+作用
 
 - 定义标识符
 - 定义类型（对比其他语言，没有明确的类型声明过程。比如没有 type 或 define 这类关键字）
@@ -8,7 +8,7 @@
 
 ## 基本数据类型
 
-7 种基本数据类型（简单数据类型、值类型）
+7 种**简单数据类型**（基本数据类型、值类型）
 
 | 基本数据类型 | 含义   | 说明                                                           |
 | ------------ | ------ | -------------------------------------------------------------- |
@@ -20,29 +20,61 @@
 | Symbol       | 符号   | 唯一值                                                         |
 | Bigint       | 大整数 | 任意精度整数                                                   |
 
-除此以外都是复杂数据类型（Object 类型及其派生类型）。
+除此以外，全都是**复杂数据类型**（Object 类型及其派生类型）。
 
-运算过程中自动进行类型的转换，内部称为抽象操作(ToPrimitive()转简单类型、ToObject()转复杂类型)
+运算过程中自动进行类型的转换，内部称为抽象操作
+- ToPrimitive()转简单类型
+- ToObject()转复杂类型
 
 ## 变量声明
 
 - 显式声明：使用 let/const/var(不推荐) 关键字进行的声明
 - 隐式声明：未声明而直接赋值 （应避免）
 
-var 和 let 的不同点：
 
-- 作用域不同：var 声明的变量作用域取决于函数作用域（动态作用域）；let 声明的变量作用域取决于代码块（静态作用域）。
-- 多次声明：语法分析时允许 var 在其作用域中多次声明，而不允许 let 这样做
+
+`var` 和 `let` 的不同点：后者更加符合直觉
+
+- 作用域不同：var 声明的变量作用域取决于函数作用域（动态作用域）；let 声明的变量作用域取决于代码块位置（静态作用域）。
+- 多次声明：语法分析器规定在相同作用域中，var 可以多次声明，但let不可以。
 - 使用方式：var 声明的变量可以先使用（undefined）再声明，而 let 必须遵循先声明后使用。
 
-const 与 let 的不同点：前者的值无法被修改。
+举例：var 声明的变量可以先使用再声明,即变量被提升到未声明的位置去使用
 
-赋值模板和解构赋值（在表达式左侧），可以声明一批变量。
+```js
+console.log(message); // undefined
+var message = "Hello, World!";
+```
+
+
+
+`const` 与 `let` 的不同点：前者的值(变量绑定的值)无法被修改，而值引用的对象则可以修改。
+
+
+赋值模版，可以构建动态的字符串。
+
+解构赋值，可以声明一批变量。
 
 ```javascript
 const { newName: name, newAge: age, ...more } = person;
 const [x, y, z] = [1, 2, 3];
 ```
+
+支持解构赋值的类型：
+| 类型 | 是否支持解构 | 使用方式 |
+|------|--------------|----------|
+| **Object（对象）** | ✅ | 使用 `{}` 解构 |
+| **Array（数组）** | ✅ | 使用 `[]` 解构 |
+| **String（字符串）** | ✅ | 将字符串视为字符数组解构 |
+| **Map（映射）** | ✅ | 使用 `Map` 的迭代器解构 |
+| **Set（集合）** | ✅ | 使用 `Set` 的迭代器解构 |
+| **函数参数（Function Parameters）** | ✅ | 使用解构作为函数参数 |
+| **函数返回值（Function Return Values）** | ✅ | 使用解构获取函数返回的多个值 |
+| **Generator（生成器）** | ✅ | 使用解构获取生成器的 yield 值 |
+| **TypedArray（类型数组）** | ✅ | 可以解构为数字、布尔值等 |
+| **Promise（Promise 对象）** | ❌ | 通过 `.then()` 链式调用来获取 Promise 的值 |
+| **Symbol（符号）** | ❌ | 
+| **Number、Boolean、String、BigInt、Undefined、Null、NaN、Function、RegExp 等原始类型** | ❌ | 
 
 ## 字面量声明
 
@@ -69,21 +101,21 @@ ECMAScript 要求字符串必须是 Unicode 字符序列。
 <!--prettier-ignore-->
 | 转义符      | Unicode-name    | codepoint（16 进制） |十进制数| 含义          |
 | ---------- | --------------- | ------------------   |---| ---------- |
-| \0         | NULL(NUL)       | 0000               |0  | 字符 NUL      |
-| \b         | backspace(BS)   | 0008               |8  | 退格          |
-| \t         | horizontal tabulation(HT)  | 0009/9  |9 | 水平制表符     |
-| \n         | EOL/NL/LF       | 000A/10            |10 | 换行符，向上卷纸一行        |
-| \v          | vertical tabulation(VT)   | 000B    |11 | 垂直制表符                |
-| \f          | FORM FEED (FF)            | 000C    |12 | 换页符                   |
-| \r          | CARRIAGE RETURN (CR)      | 000D    |13        | 回车符,电传打印机的打印头回到行首    |
-| \'          | APOSTROPHE                | 0027    |39        | 单引号                           |
-| \"          | QUOTATION MARK            | 0022    |34        | 双引号                           |
-| \\\\        | REVERSE SOLIDUS           | 005C    |92        | 反斜线符                          |
-| \xnn        |                           |         || ASCII 字符编码                                    |
-| \unnnn      |                           |         || unicode 字符编码的基本平面字符（≤ FFFF）             |
-| \u\{nnnnn\} |                           |         || unicode 字符编码的基本平面字符和扩展平面字符（＞ FFFF） |
+| `\0 `        | NULL(NUL)       | 0000               |0  | 字符 NUL      |
+| `\b`         | backspace(BS)   | 0008               |8  | 退格          |
+| `\t`         | horizontal tabulation(HT)  | 0009/9  |9 | 水平制表符     |
+| `\n`         | EOL/NL/LF       | 000A/10            |10 | 换行符，向上卷纸一行        |
+| `\v`         | vertical tabulation(VT)   | 000B    |11 | 垂直制表符                |
+| `\f`          | FORM FEED (FF)            | 000C    |12 | 换页符                   |
+| `\r`          | CARRIAGE RETURN (CR)      | 000D    |13        | 回车符,电传打印机的打印头回到行首    |
+| `\'`          | APOSTROPHE                | 0027    |39        | 单引号                           |
+| `\"`          | QUOTATION MARK            | 0022    |34        | 双引号                           |
+| `\\`        | REVERSE SOLIDUS           | 005C    |92        | 反斜线符                          |
+| `\xnn`        |                           |         || ASCII 字符编码                                    |
+| `\unnnn`      |                           |         || unicode 字符编码的基本平面字符（≤ FFFF）             |
+| `\u\{nnnnn\}` |                           |         || unicode 字符编码的基本平面字符和扩展平面字符（＞ FFFF） |
 
-CRLF 组合常见于文本文件、http 协议中。
+`CRLF` 组合常见于文本文件、http 协议中。
 
 常见的转义符
 [ Controls and Basic Latin ](https://www.unicode.org/charts/PDF/U0000.pdf)

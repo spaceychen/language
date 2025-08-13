@@ -3,60 +3,54 @@
 ## 实例的创建
 
 ```js
-let object = {}; // 字面量
-new Object(any); // 面向对象的实例化方式。构造出any对应类型的对象实例，俗称装包
-Object.prototype.constructor(any); // 函数式的实例化方式，调用返回。效果同上。
+// 字面量
+let object = {};
+// 面向对象的实例化
+new Object(any); // 构造出any值所对应类型的对象实例，俗称装包
+// 函数式的实例化
+Object.prototype.constructor(any); 
 Object(any); // 同上。Object === Object.prototype.constructor
+Object.create(null,propDescriptors)
 ```
-
-::: details exercises
-::: code-group
-<<< @/../codes/js/std/Object/instance.test.js [instance]
-<<< @/../codes/js/std/Object/proto/constructor.test.js [constructor]
-:::
 
 ## 实例的状态
 
-属性表的可操作权限,简称为实例的状态
+实例的属性集的可操作状态,简称为实例的状态
 
 <!-- prettier-ignore -->
-| 实例状态\属性表权限 | record add | record delete | field modify | value modify | 机制 |
+| 实例状态 | 增加属性 | 删除属性 | 修改键名 | 修改值 | 说明 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| 可扩展状态(extensible,default) | yes | yes | yes | yes | `if( [[Extensible]] === true`&&   `descriptor.configurable === true`&&  `descriptor.writable === true )` |
- | 不可扩展状态   (non-extensible) | no | yes | yes | yes | `if( [[Extensible]] === false`&&  `descriptor.configurable === true`&&  `descriptor.writable === true )` |
-| 封存态(sealed) | no | no | no | yes | `if( [[Extensible]] === false`&&   `descriptor.configurable === false`&&   `descriptor.writable === true )` |
-| 冻结态(frozen) | no | no | no | no | `if( [[Extensible]] === false`&&  `descriptor.configurable === false`&&   `descriptor.writable === false )` |
+| 可扩展态(extensible,default) | ✔️ | ✔️ | ✔️ | ✔️ | 可以对属性做任意操作 |
+| 不可扩展态   (non-extensible) | ❌ | ✔️ | ✔️ | ✔️ | 不能做属性的增加操作 |
+| 封存态(sealed) | ❌ | ❌ | ❌ | ✔️ | 不能做属性的增加、删除、修改操作|
+| 冻结态(frozen) | ❌ | ❌ | ❌ | ❌ | 不能对属性做任何操作 |
 
-说明:
+原理:
+1. `[[Extensible]]`内部属性，决定了实例能否扩展属性（添加属性）
+1. 属性描述符的`configurable`，决定了该属性能否删除或重新定义（实例删除属性和重新定义属性）
+1. 属性描述符的`writable`，决定了该属性可否写入
+1. 属性描述符的`enumerable`，决定了该属性可否枚举
+1. 实例状态只能**从上往下**改变，是不可逆的！
 
-1. `[[Extensible]]`为实例的内部属性，决定了其属性表可否扩展（添加属性）
-1. 属性描述符的`configurable`决定了该属性可否删除或重新定义（删除和重新定义）
-1. 属性描述符的`writable`决定了该属性可否写入
-1. 由字面量或构造器实例化时，三者均是 true
-1. 状态只能从上往下改变，不可逆！
 
 改变实例状态的方法
 
 <!-- prettier-ignore -->
-ecma | api | 机制 | 状态
+ecma | api | 说明 | 状态
 --- | :--- | :--- | :---
-5| Object.preventExtensions(obj) [:boom:] | 属性表的可扩展关闭  `[[Extensible]] = false` | 不可扩展态
-5| Object.seal(obj) [:boom:] | 属性表的可配置关闭  `descriptor.configurable = false` | 封存态
-5| Object.freeze(obj) [:boom:] | 属性表的可写入关闭  `descriptor.writable = false` | 冻结态
-5| Object.isExtensible(obj) | `if([[Extensible]] === true`| 是否为可扩展态
-5| Object.isSealed(obj) | `if([[Extensible]] === false && descriptor.configurable === false`| 是否为封存态
-5| Object.isFrozen(obj) | `if([[Extensible]] === false && descriptor.configurable === false && descriptor.writable === false` | 是否为冻结态
+5| Object.preventExtensions(obj) 💥 | 关闭实例的可扩展性，`[[Extensible]] = false` | 不可扩展态
+5| Object.seal(obj) 💥 | 关闭实例的可配置性  `descriptor.configurable = false` | 封存态
+5| Object.freeze(obj) 💥 | 关闭实例的可写入性  `descriptor.writable = false` | 冻结态
+5| Object.isExtensible(obj) | `if([[Extensible]] === true`| 判断是否为可扩展态
+5| Object.isSealed(obj) | `if([[Extensible]] === false && descriptor.configurable === false`| 判断是否为封存态
+5| Object.isFrozen(obj) | `if([[Extensible]] === false && descriptor.configurable === false && descriptor.writable === false` | 判断是否为冻结态
 
-<!-- @include: ./tip.md -->
-
-::: details exercises
-::: code-group
-<<< @/../codes/js/std/Object/static/freeze.test.js [freeze]
-:::
 
 ## 属性描述符(集)
 
-使用"属性描述符"数据结构，来创建实例(定义对象实例的属性)
+使用[属性描述符](docs/js/type/data-structure.md)数据结构，来创建实例(定义对象实例的属性)
+
+以下方法的属性描述符默认值均为 false，`{writable=false,enumerable=false,configurable=false}`
 
 <!-- prettier-ignore -->
 ecma| api | describe |
@@ -68,12 +62,8 @@ ecma| api | describe |
 5|Object.getOwnPropertyDescriptors(obj) [:musical_keyboard:,own]|查询对象的属性描述符集|
 1|Object.prototype.propertyIsEnumerable(propName) [:musical_keyboard:]|属性可枚举(自身的)|
 
-<!-- @include: ./tip.md -->
+当使用字面量、构造器来实例化时，属性描述符的`{writable,enumerable,configurable}`默认值均为 true。
 
-::: details exercises
-::: code-group
-<<< @/../codes/js/std/Object/static/defineProperty.test.js [defineProperty]
-:::
 
 ## 方法
 

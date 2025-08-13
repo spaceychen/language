@@ -1,9 +1,9 @@
 # Array
 
-数组可存储多个元素成员，元素可以是任意类型。
+数组的特点
 
 - 存储大小自动调整
-- 元素类型不限(注：若要限制类型，使用类型化数组 TypedArray)
+- 元素类型不限(若要限制类型，使用类型化数组 TypedArray)
 - 索引为正整数([0, +Infinity])
 - 全局对象的所有内置方法,对其都是浅拷贝
 
@@ -31,17 +31,17 @@ arr.length; // 2
 增删改，均有副作用
 
 <!-- prettier-ignore -->
-|ecma| api |describe |副作用|
+| ecma| api | describe | note|
 |--- | --- | --- | ---|
-5|push(...items) [:boom:]|向数组的末尾添加一个或更多元素，返回新的长度|
-5|pop() [:boom:]|移除数组的最后一个元素，返回该元素|
-5|shift() [:boom:]|移除数组的第一个元素，返回该元素|
-5|unshift(...items) [:boom:]|向数组的开头添加一个或更多元素，返回新的长度|
-5|splice(start,count,...itemN) [:boom:]|删除选择元素,然后在此位置添加新元素|
-2015|fill(item,[start,[end]]) [:boom:]|按索引范围填充(替换)数组成员|
-2015|copyWithin(target, start, [end]) [:boom:]|在数组内部进行复制操作|
-5|reverse() [:boom:]|反转数组中的元素顺序|
-5|sort([cb]) [:boom:]|对数组元素进行排序|
+5|push(...items) |向数组的末尾添加一个或更多元素，返回新的长度|
+5|pop() |移除数组的最后一个元素，返回该元素|
+5|shift() |移除数组的第一个元素，返回该元素|
+5|unshift(...items) |向数组的开头添加一个或更多元素，返回新的长度|
+5|splice(start,count,...itemN) |删除选择元素,然后在此位置添加新元素|
+2015|fill(item,[start,[end]]) |按索引范围填充(替换)数组成员|
+2015|copyWithin(target, start, [end]) |在数组内部进行复制操作|
+5|reverse() |反转数组中的元素顺序|
+5|sort([cb]) |对数组元素进行排序|
 
 <!-- ::: details exercises
 ::: code-group

@@ -1,53 +1,50 @@
 [
   {
     "type": "dir",
-    "name": "concept",
-    "label": "concept",
+    "name": "overview",
+    "label": "概述",
     "collapsible": true,
     "collapsed": true
   },
   {
     "type": "dir",
     "name": "grammer",
-    "label": "grammer",
+    "label": "语法设计",
     "collapsible": true,
     "collapsed": false
   },
    {
     "type": "dir",
     "name": "type",
-    "label": "type",
+    "label": "类型系统",
     "collapsible": true,
-    "collapsed": false
-  },
-  {
-    "type": "divider"
+    "collapsed": true
   },
   {
     "type": "dir",
     "name": "structural",
-    "label": "structural",
+    "label": "结构化",
     "collapsible": true,
-    "collapsed": false
+    "collapsed": true
   },
   {
     "type": "dir",
-    "name": "dymamic",
-    "label": "dymamic",
+    "name": "dymanic",
+    "label": "动态性",
     "collapsible": true,
-    "collapsed": false
+    "collapsed": true
   },
   {
     "type": "dir",
     "name": "parallel",
-    "label": "parallel",
+    "label": "并发性",
     "collapsible": true,
-    "collapsed": false
+    "collapsed": true
   },
   {
     "type": "dir",
     "name": "paradigm",
-    "label": "paradigm",
+    "label": "范式",
     "collapsible": true,
-    "collapsed": false
+    "collapsed": true
   }]

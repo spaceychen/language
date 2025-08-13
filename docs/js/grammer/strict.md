@@ -30,7 +30,7 @@
 | 对象字面量声明 | 不许对象字面量声明中存在相同的属性名                |      |
 | 函数声明       | 不许出现相同的参数名                                |      |
 | 赋值运算       | eval 和 arguments 标识符不能声明或重写              |      |
-| delete         | 不许 delete 掉 eval、argumetns 和所有显式声明的变量 |      |
+| delete         | 不许 delete 掉 eval、arguments 和所有显式声明的变量 |      |
 | 标识符         | 声明的标识符不能使用关键字和保留字                  |      |
 | with           | 不能使用 with                                       |      |
 
@@ -43,7 +43,7 @@
 - 访问 arguments.callee 或 fn.callee，会导致类型异常(TypeError)
 - 对 arguments 的修改不起作用。
 
-```javascript
+```js
 function f1(x) {
   "use strict";
   arguments[0] = 100;
