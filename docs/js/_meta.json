@@ -1,0 +1,50 @@
+[
+  {
+    "type": "dir",
+    "name": "overview",
+    "label": "概述",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "grammer",
+    "label": "语法设计",
+    "collapsible": true,
+    "collapsed": false
+  },
+   {
+    "type": "dir",
+    "name": "type",
+    "label": "类型系统",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "structural",
+    "label": "结构化",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "dymanic",
+    "label": "动态性",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "parallel",
+    "label": "并发性",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "paradigm",
+    "label": "范式",
+    "collapsible": true,
+    "collapsed": true
+  }]

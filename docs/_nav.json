@@ -1,0 +1,57 @@
+[
+  {
+    "text": "WebUI",
+    "link": "/web/",
+    "activeMatch": "/web/"
+  },
+  {
+    "text": "JavaScript",
+    "link": "/js/",
+    "activeMatch": "/js/"
+  },
+  {
+    "text": "TypeScript",
+    "link": "/ts/",
+    "activeMatch": "/ts/"
+  },
+  {
+  "text": "C++",
+  "link": "/cpp/",
+  "activeMatch": "/cpp/"
+  },
+  {
+    "text": "·· ",
+    "items": [
+      {
+        "text": "C",
+        "link": "/c/",
+        "activeMatch": "/c/"
+      },
+      {
+        "text": "Rust",
+        "link": "/rust/",
+        "activeMatch": "/rust/"
+      },  
+      {
+      "text": "Python",
+      "link": "/python/",
+      "activeMatch": "/python/"
+      },
+      {
+        "text": "Cangjie",
+        "link": "/cangjie/",
+        "activeMatch": "/cangjie/"
+      },
+      {
+        "text": "SQL",
+        "link": "/sql/",
+        "activeMatch": "/sql/"
+      },
+      {
+        "text": "Design",
+        "link": "/overview/design",
+        "activeMatch": "/overview/"
+      }
+    ]
+  }
+]
