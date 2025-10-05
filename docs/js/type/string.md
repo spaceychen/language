@@ -1,5 +1,8 @@
 # String
 
+```md file="../tip.md"
+```
+
 ## Instance
 
 实例化

@@ -17,30 +17,38 @@ const object = {}; // 最常用
 // 实例的属性
 object.constructor === Object // true
 ```
-实例属性的状态，受[属性描述符(集)数据结构](../overview/data-structure)的控制
 
-::: details test
-```js file="../../../demo/js/std/datatype/descriptor.test.js"
-```
-:::
+实例的特性受内部属性的控制
+- [[Extensible]] 新属性的可扩展性开关，false 就不能添加新属性了
+- [[Configurable]] 存量属性的可配置性开关，同步修改所有存量属性的属性描述符`configurable`
+- [[Writable]] 存量属性的可写入开关，同步修改存量属性的属性描述符`writable`
+- [[Configurable]]和[[Writable]] 仅通过修改存量属性的属性描述符来施加影响力
 
-实例的状态，受以下三个方法控制
-
+修改内部属性的方法
 <!-- prettier-ignore -->
-| state | **add prop** | delete prop | modify key | modify value | api |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `extensible` | ✔️ | ✔️ | ✔️ | ✔️ | Object.isExtensible(`instance`💥)
-| `non-ext` | ❌ | ✔️ | ✔️ | ✔️ | Object.preventExtensions(`instance`💥) <br>Object.isExtensible(`instance`)// false
-| `sealed` | ❌ | ❌ | ❌ | ✔️ | Object.seal(`instance`💥) <br>Object.isSealed(`instance`)// true
-| `frozen` | ❌ | ❌ | ❌ | ❌ | Object.freeze(`instance`💥) <br>Object.isFrozen(`instance`)// true<br>Object.isSealed(`instance`)// true
-
-实例状态的变化影响：
-- 限制新属性的添加
-- 改变存量属性的属性描述符
-- 状态**从上往下**改变，不可逆！
+|  方法 | [[Extensible]] | [[Configurable]] | [[Writable]] | 实例状态(抽象)
+| :--- | :--- | :--- | :--- | :--- |
+| - | `true` | `true` | `true `| `extensible`
+| `Object.preventExtensions(instance💥)` | `false` | `true` | `true`| `non-ext`
+| `Object.seal(instance💥)` | `false` | `false` | `true` |`sealed`
+| `Object.freeze(instance💥)` | `false` | `false` | `false ` | `frozen`
 
 ::: details test
 ```js file="../../../demo/js/std/Object/static/freeze.test.js"
+```
+:::
+
+实例属性的特性受[属性描述符(集)](../overview/data-structure)的控制
+
+<!-- prettier-ignore -->
+| 属性描述符 | 可删除/重新定义 | 可修改值 | 可被检索 |
+| :--- | :--- | :--- | :--- | 
+| `configurable` | ✔️ |  |  
+| `writable` |  | ✔️ |
+| `enumerable` | |  | ✔️
+
+::: details test
+```js file="../../../demo/js/std/datatype/descriptor.test.js"
 ```
 :::
 
@@ -51,37 +59,26 @@ object.constructor === Object // true
 <!-- prettier-ignore -->
 ecma| api | describe |
 --- | :--- | :--- | 
-5|Object.create(`proto`[,`propDescriptors`🗝️🔑]) | 创建实例，参数为原型对象和属性描述符集|
-5|Object.defineProperty(`instance`💥,`propName`🗝️🔑,`propDescriptor`) |定义属性|
-5|Object.defineProperties(`instance`💥,`propDescriptors`🗝️🔑)|定义属性集|
-5|Object.getOwnPropertyDescriptor(`instance`) |查询自身的属性描述符|
-5|Object.getOwnPropertyDescriptors(`instance`) |查询自身的属性描述符集|
-1|Object.prototype.propertyIsEnumerable(`propName`🗝️🔑) | 自身可枚举属性|
+5|🗝️🔑 Object.create(`proto`[,`propDescriptors`]) | 创建实例，参数为原型对象和属性描述符集|
+5|🗝️🔑 Object.defineProperty(`instance`💥,`propName`,`propDescriptor`) |定义属性|
+5|🗝️🔑 Object.defineProperties(`instance`💥,`propDescriptors`)|定义属性集|
+5|🗝️🔑 Object.getOwnPropertyDescriptor(`instance`,`propName`) |查询自身的属性描述符|
+5|🗝️🔑 Object.getOwnPropertyDescriptors(`instance`) |查询自身的属性描述符集|
+1|🗝️🔑 Object.prototype.propertyIsEnumerable(`propName`) | 自身可枚举属性|
 
 ## 方法-原型机制
 
-原型对象链条相关
+原型对象及原型链条相关
 <!-- prettier-ignore -->
 ecma| api | describe |
 --- | :--- | :--- | 
-2015|Object.setPrototypeOf(`instance`💥,`proto`) | 设置原型。因性能问题不推荐，推荐使用 `create` 来创建新对象
-2015|Object.getPrototypeOf(`instance`) | 获取实例自己的原型对象
-2015|Object.prototype.isPrototypeOf(`instance`,`proto`) | 判断原型<br>相当于`proto === Object.prototype.getPrototypeOf(instance)`
+2015|⛓️ Object.getPrototypeOf(`instance`) | 获取实例的原型对象
+2015|⛓️ Object.setPrototypeOf(`instance`💥,`proto`) | 设置原型对象，性能不佳。<br>推荐 `create` 来创建新对象
+2015|⛓️ Object.prototype.isPrototypeOf(`instance`,`proto`) | 判断原型对象。相当于`proto === Object.prototype.getPrototypeOf(instance)`
 
-## 其他方法
-属性相关
-<!-- prettier-ignore -->
-ecma| api | describe |
---- | :--- | :--- | 
-2015|🔑 Object.getOwnPropertySymbols(`instance`)| 获取自身symbol类型的键名数组<br>不可枚举属性也会返回
-5|🗝️ Object.getOwnPropertyNames(`instance`)| 获取自身 String类型的键名数组<br>不可枚举属性也返回
-2015|Object.hasOwn(`instance`,`propName`🗝️🔑) | 判断自身属性中有无该属性键名
-3|~~Object.prototype.hasOwnProperty(`instance`,propName)~~|判断自身属性中有没有该属性名<br>已废除，推荐`Object.hasOwn`
-2015|Object.assign(`instance`💥, `...sources`🗝️🔑) | 分配属性给实例。<br>sources自右向左逐个读取。<br>source的属性是可枚举的自有的,可以是 null或undefined
-2017|🗝️ Object.keys(`instance`)| 返回键名数组
-2017|🗝️ Object.values(`instance`) | 返回键值数组
+## 方法-工具
 
-数据结构转换相关
+数据结构转换
 <!-- prettier-ignore -->
 ecma| api |describe |
 --- | --- | --- |
@@ -89,7 +86,19 @@ ecma| api |describe |
 2017|🗝️🔑 Object.fromEntries(`instance`) | 数据类型转换，entries转为object
 2024|Object.groupBy(`items`,`callback`) | 数组成员（对象）进行分组
 
-未分类的工具
+属性各种操作
+<!-- prettier-ignore -->
+ecma| api | describe |
+--- | :--- | :--- | 
+2015|🔑 Object.getOwnPropertySymbols(`instance`)| 获取自身symbol类型的键名数组<br>不可枚举属性也会返回
+5|🗝️ Object.getOwnPropertyNames(`instance`)| 获取自身 String类型的键名数组<br>不可枚举属性也返回
+2015|🗝️🔑 Object.hasOwn(`instance`,`propName`) | 判断自身属性中有无该属性键名
+3|~~Object.prototype.hasOwnProperty(`instance`,propName)~~|判断自身属性中有没有该属性名<br>已废除，推荐`Object.hasOwn`
+2015|🗝️🔑 Object.assign(`instance`💥, `...sources`) | 分配属性给实例。<br>sources自右向左逐个读取。<br>source的属性是可枚举的自有的,可以是 null或undefined
+2017|🗝️ Object.keys(`instance`)| 返回键名数组
+2017|🗝️ Object.values(`instance`) | 返回键值数组
+
+未分类
 <!-- prettier-ignore -->
 ecma| api |describe |
 --- | --- | --- |

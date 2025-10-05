@@ -5,11 +5,12 @@ const { toLocaleString, toString } = Object.prototype;
  * @returns {String} - '[object 类型]'
  */
 
+function primitiveType(value) {
+  const typeString = Object.prototype.toString.call(value);
+  return typeString.slice(8, -1).toLowerCase();
+}
+
 describe("查看Object.prototype.toString.call(value)的兼容性:很好", () => {
-  function primitiveType(value) {
-    const typeString = Object.prototype.toString.call(value);
-    return typeString.slice(8, -1).toLowerCase();
-  }
   test("Privitive type", () => {
     expect(primitiveType("1")).toBe("string");
     expect(primitiveType(1)).toBe("number");

@@ -14,12 +14,12 @@ describe("属性描述符的定义方法", () => {
     };
 
     test("defineProperty", () => {
-        Object.defineProperty(object, "k", descriptor);
+        defineProperty(object, "k", descriptor);
         expect(getOwnPropertyDescriptor(object, "k")).toMatchObject(descriptor);
     });
 
     test("defineProperties", () => {
-        Object.defineProperties(object, { k: descriptor });
-        expect(getOwnPropertyDescriptor(object, "k")).toMatchObject(descriptor);
+        defineProperties(object, { k: descriptor });
+        expect(getOwnPropertyDescriptors(object, "k")).toMatchObject(descriptor);
     });
 });
