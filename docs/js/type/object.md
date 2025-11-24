@@ -3,6 +3,16 @@
 ```md file="../tip.md"
 ```
 
+使用场景
+| 场景 | 思路 |
+|------|----------------|
+| **封装与继承** | 理解js是基于原型链的，学习何时将特性封装到实例或分布到原型链上的各个节点|
+| **性能优化** | 避免频繁修改 `[[Prototype]]`；<br>避免频繁查找：使用 `Object.create(null)` 创建无原型对象，减少继承链查找。 |
+| **安全封装** | 对公共 API 使用 `Object.seal()` 甚至`Object.freeze()` 防止外部篡改。 |
+| **自定义 JSON 序列化** | 给对象实现 `toJSON()`，或使用 `JSON.stringify(obj, replacer)` 通过 `replacer` 函数动态控制序列化过程。 
+| **代理（Proxy）** | 通过 `handler.get`, `handler.set`, `handler.has` 等映射到内部方法，实现权限校验、懒加载等功能。 |
+| **检测对象类型** | 用 `Object.prototype.toString.call(obj)` 或 `Reflect.ownKeys()` 判断内置对象或自定义类实例。 |
+
 ## Instance
 创建实例
 
@@ -18,27 +28,21 @@ const object = {}; // 最常用
 object.constructor === Object // true
 ```
 
-实例的特性受内部属性的控制
-- [[Extensible]] 新属性的可扩展性开关，false 就不能添加新属性了
-- [[Configurable]] 存量属性的可配置性开关，同步修改所有存量属性的属性描述符`configurable`
-- [[Writable]] 存量属性的可写入开关，同步修改存量属性的属性描述符`writable`
-- [[Configurable]]和[[Writable]] 仅通过修改存量属性的属性描述符来施加影响力
-
-修改内部属性的方法
+修改[对象内部属性](../overview/objectInternal.md)的方法
 <!-- prettier-ignore -->
-|  方法 | [[Extensible]] | [[Configurable]] | [[Writable]] | 实例状态(抽象)
-| :--- | :--- | :--- | :--- | :--- |
-| - | `true` | `true` | `true `| `extensible`
-| `Object.preventExtensions(instance💥)` | `false` | `true` | `true`| `non-ext`
-| `Object.seal(instance💥)` | `false` | `false` | `true` |`sealed`
-| `Object.freeze(instance💥)` | `false` | `false` | `false ` | `frozen`
+|  外部方法\内部属性 | [[Extensible]] | [[Configurable]] | [[Writable]]
+| :--- | :--- | :--- | :--- 
+| - <br>默认态 | `true` | `true` | `true `
+| `Object.preventExtensions(instance💥)`<br>不可扩展态 | `false` | `true` | `true`
+| `Object.seal(instance💥)`<br>封存态 | `false` | `false` | `true` 
+| `Object.freeze(instance💥)`<br>冻结态 | `false` | `false` | `false `
 
 ::: details test
 ```js file="../../../demo/js/std/Object/static/freeze.test.js"
 ```
 :::
 
-实例属性的特性受[属性描述符(集)](../overview/data-structure)的控制
+实例的属性受[属性描述符(集)](../overview/data-structure)的控制
 
 <!-- prettier-ignore -->
 | 属性描述符 | 可删除/重新定义 | 可修改值 | 可被检索 |
@@ -52,7 +56,7 @@ object.constructor === Object // true
 ```
 :::
 
-## 方法-属性描述符
+## 属性描述符
 
 部分参数是[属性描述符](../overview/data-structure.md)数据结构
 
@@ -66,7 +70,7 @@ ecma| api | describe |
 5|🗝️🔑 Object.getOwnPropertyDescriptors(`instance`) |查询自身的属性描述符集|
 1|🗝️🔑 Object.prototype.propertyIsEnumerable(`propName`) | 自身可枚举属性|
 
-## 方法-原型机制
+## 原型机制
 
 原型对象及原型链条相关
 <!-- prettier-ignore -->
@@ -78,27 +82,28 @@ ecma| api | describe |
 
 ## 方法-工具
 
-数据结构转换
+### 数据结构转换
 <!-- prettier-ignore -->
 ecma| api |describe |
 --- | --- | --- |
-2017|🗝️ Object.entries(`instance`)<br>  | 数据结构转换，object转为entries<br>不返回键是Symbol类型的
-2017|🗝️🔑 Object.fromEntries(`instance`) | 数据类型转换，entries转为object
-2024|Object.groupBy(`items`,`callback`) | 数组成员（对象）进行分组
+2017|🗝️ Object.entries(`instance`)<br>  | Object转为Entries
+2017|🗝️🔑 Object.fromEntries(`instance`) | Entries转为Object
+2024|Object.groupBy(`items`,`callback`) | 进行分组
 
-属性各种操作
+属性操作
 <!-- prettier-ignore -->
 ecma| api | describe |
 --- | :--- | :--- | 
 2015|🔑 Object.getOwnPropertySymbols(`instance`)| 获取自身symbol类型的键名数组<br>不可枚举属性也会返回
 5|🗝️ Object.getOwnPropertyNames(`instance`)| 获取自身 String类型的键名数组<br>不可枚举属性也返回
 2015|🗝️🔑 Object.hasOwn(`instance`,`propName`) | 判断自身属性中有无该属性键名
-3|~~Object.prototype.hasOwnProperty(`instance`,propName)~~|判断自身属性中有没有该属性名<br>已废除，推荐`Object.hasOwn`
-2015|🗝️🔑 Object.assign(`instance`💥, `...sources`) | 分配属性给实例。<br>sources自右向左逐个读取。<br>source的属性是可枚举的自有的,可以是 null或undefined
+3|~~Object.prototype.hasOwnProperty(`instance`,propName)~~|已废除，推荐`Object.hasOwn`
+2015|🗝️🔑 Object.assign(`instance`💥, `...sources`) | 分配属性给实例。<br>sources自右向左逐个读取，然后覆盖实例上原有的属性。<br>source的属性是可枚举的自有的,可以是 null或undefined
 2017|🗝️ Object.keys(`instance`)| 返回键名数组
 2017|🗝️ Object.values(`instance`) | 返回键值数组
 
-未分类
+### 其他
+// TODO
 <!-- prettier-ignore -->
 ecma| api |describe |
 --- | --- | --- |

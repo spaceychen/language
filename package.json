@@ -24,7 +24,7 @@
     "rspress": "rspress --help"
   },
   "dependencies": {
-    "rspress": "^2.0.0-beta"
+    "@rspress/core": "^2.0.0-rc"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

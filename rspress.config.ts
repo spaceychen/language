@@ -1,5 +1,5 @@
 import * as path from 'node:path';
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { license, author,repository } from './package.json';
 
 export default defineConfig({
