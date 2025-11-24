@@ -4,7 +4,7 @@
     "name": "overview",
     "label": "概述",
     "collapsible": true,
-    "collapsed": true
+    "collapsed": false
   },
   {
     "type": "dir",
@@ -18,7 +18,7 @@
     "name": "type",
     "label": "类型系统",
     "collapsible": true,
-    "collapsed": true
+    "collapsed": false
   },
   {
     "type": "dir",
