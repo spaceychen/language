@@ -8,7 +8,7 @@
   },
   {
     "type": "dir",
-    "name": "grammer",
+    "name": "grammar",
     "label": "语法设计",
     "collapsible": true,
     "collapsed": false
@@ -25,26 +25,26 @@
     "name": "structural",
     "label": "结构化",
     "collapsible": true,
-    "collapsed": true
+    "collapsed": false
   },
   {
     "type": "dir",
     "name": "dymanic",
     "label": "动态性",
     "collapsible": true,
-    "collapsed": true
+    "collapsed": false
   },
   {
     "type": "dir",
     "name": "parallel",
     "label": "并发性",
     "collapsible": true,
-    "collapsed": true
+    "collapsed": false
   },
   {
     "type": "dir",
     "name": "paradigm",
     "label": "范式",
     "collapsible": true,
-    "collapsed": true
+    "collapsed": false
   }]

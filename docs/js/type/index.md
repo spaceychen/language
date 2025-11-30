@@ -1,17 +1,14 @@
 # 类型
 
 特点
-- “弱类型”。js 的类型无需靠“声明出来”，在运行时可进行数据实体的类型感知和转化。比如`typeof`、`Array.isArray`、`Object.prototype.toString`等
-- “动态类型”。js的类型是动态的，在运行时可以对数据实体的结构进行增删改。
+- “弱类型”。 在运行时进行数据实体的类型感知而无需声明，比如 `typeof`、`Array.isArray`、`Object.prototype.toString`等
+- “动态类型”。 在运行时可以对数据实体的结构进行改变，比如`let num = 1; num = '1'`
 
-优缺点
-|项目|描述|
-|---|---|
-|优点|开发效率极快、心智负担极低
-|缺点|不可靠，仅适合快速构建项目原型。
+优缺点分析
+- 优点：开发效率极快、心智负担极低
+- 缺点：不可靠，仅适合快速构建项目原型
 
-
-如何在“无类型声明”的语言中构建可靠系统？防御式编程
+如何在“无类型声明”的语言中构建可靠系统？ 防御式编程！
 | 层级 | 工具/方法 | 作用 |
 |------|-----------|------|
 | 运行时安全 | `typeof`、`Array.isArray`、`Object.prototype.toString` | 基本类型检测 |
@@ -64,9 +61,9 @@ console.log(input(5));
 
 ## 类库 
 
-Javascript 的类型对象无需引入，已经挂载在了全局对象上了。
+Javascript 的类库已经默认挂载在了全局对象上了。
 
-类库又称为：
-- JavaScript standard library 标准库
-- Standard Built-In Objects 标准内置对象
-- Runtime library 运行时库,相对编译时库而言
+该类库又称为：
+- JavaScript standard library ，js标准库
+- Standard Built-In Objects ，标准内置对象
+- Runtime library ，运行时库（相对编译时库而言）

@@ -1,13 +1,16 @@
 # Array
+```md file="../tip.md"
+```
 
 数组的特点
 
-- 存储大小自动调整
-- 元素类型不限(若要限制类型，使用类型化数组 TypedArray)
-- 索引为正整数([0, +Infinity])
-- 全局对象的所有内置方法,对其都是浅拷贝
+- 存储空间大小自动调整
+- 元素类型不限。（使用类型化数组 TypedArray 来限制类型）
+- 索引为正整数 [0, +Infinity）
+- 所有全局对象的所有内置方法,对其都是浅拷贝
 
 ## Instance
+创建实例
 
 ```js
 // 推荐的实例化方式
@@ -26,22 +29,22 @@ arr.length; // 2
 
 ## Methods
 
-默认来自原型对象(Array.prototype)
+以下方法默认来自 Array.prototype
 
 增删改，均有副作用
 
 <!-- prettier-ignore -->
-| ecma| api | describe | note|
+| ecma| api | semantics | note|
 |--- | --- | --- | ---|
-5|push(...items) |向数组的末尾添加一个或更多元素，返回新的长度|
-5|pop() |移除数组的最后一个元素，返回该元素|
-5|shift() |移除数组的第一个元素，返回该元素|
-5|unshift(...items) |向数组的开头添加一个或更多元素，返回新的长度|
-5|splice(start,count,...itemN) |删除选择元素,然后在此位置添加新元素|
-2015|fill(item,[start,[end]]) |按索引范围填充(替换)数组成员|
-2015|copyWithin(target, start, [end]) |在数组内部进行复制操作|
-5|reverse() |反转数组中的元素顺序|
-5|sort([cb]) |对数组元素进行排序|
+5|💥push(...items) |向数组的末尾添加一个或更多元素，返回新的长度|
+5|💥pop() |移除数组的最后一个元素，返回该元素|
+5|💥shift() |移除数组的第一个元素，返回该元素|
+5|💥unshift(...items) |向数组的开头添加一个或更多元素，返回新的长度|
+5|💥splice(start,count,...itemN) |删除选择元素,在此位置可添加新元素|
+2015|💥fill(item,[start,[end]]) |按索引范围填充(替换)数组成员|
+2015|💥copyWithin(target, start, [end]) |数组内部复制和粘贴。|target 即替换指针，start/end 为参考范围指针
+5|💥reverse() |反转数组中的元素顺序|
+5|💥sort([cb]) |对数组元素进行排序|
 
 <!-- ::: details exercises
 ::: code-group
@@ -55,7 +58,7 @@ arr.length; // 2
 |ecma| api |describe |note |
 |--- | --- | --- | --- |
 5|forEach(cb,[thisArg])|遍历数组中的每个元素，通过执行回调|
-5|map(cb,[thisArg])|遍历数组中的每个元素，返回一个新数组（每轮的返回值）｜
+5|map(cb,[thisArg])|遍历数组中的每个元素，返回一个新数组（每轮的返回值）|
 5|every(cb,[thisArg])|测试数组中所有元素是否都通过由提供的函数实现的测试|
 5|some(cb,[thisArg])|测试数组中是否至少有一个元素通过由提供的函数实现的测试|
 5|filter(cb,[thisArg])|返回数组，成员通过了测试|

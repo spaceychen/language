@@ -11,7 +11,7 @@ Map(字典/映射)是 Object 数据类型的增强版本。
 | 属性可控性      | 属性表的控制，访问器属性的控制           | 无                   |
 | 易用性          | 难                                       | 易                   |
 
-## 实例的创建
+## Inst
 
 ```js
 new Map();
@@ -24,21 +24,22 @@ map.size; // 规模度量
 <<< @/../codes/js/std/Map/instance.test.js [instance]
 :::
 
-## 原型方法
+## Method
+以下方法默认来自于`Map.prototype`
 
 <!-- prettier-ignore -->
 ecma| api |describe |note |
 --- | --- | --- | --- |
-|2015|Map.prototype.get(key)|取值||
-|2015|Map.prototype.set(key,value)|添加或修改一个属性||
-|2015|Map.prototype.delete(key)|删除||
-|2015|Map.prototype.clear()|删除所有||
-|2015|Map.prototype.has(key)|是否存在||
-|2015|Map.prototype.keys()|取键数组||
-|2015|Map.prototype.values()|取值数组||
-|2015|Map.prototype.entries()|返回迭代器对象||
-|2015|Map.prototype.forEach((key,value,map)=>{})|遍历||
-|2015|Map.prototype.\[Symbol.iterator]()|供for...of和展开语法使用||
+|2015|get(key)|取值||
+|2015|set(key,value)|添加或修改一个属性||
+|2015|delete(key)|删除||
+|2015|clear()|删除所有||
+|2015|has(key)|是否存在||
+|2015|keys()|取键数组||
+|2015|values()|取值数组||
+|2015|entries()|返回迭代器对象||
+|2015|forEach((key,value,map)=>{})|遍历||
+|2015|\[Symbol.iterator]()|供for...of和展开语法使用||
 
 ::: details exercises
 ::: code-group

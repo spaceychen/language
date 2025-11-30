@@ -7,24 +7,23 @@ const {
 
 /**
  * 实验目标
- * - 检测实例状态的方法
+ * - 实例的内部属性的检测
  * 实验结论
- * - 状态`extensible`: isExtensible 为 true，其他为 false
- * - 状态`non-ext`: 均为 false
- * - 状态`sealed`: isExtensible 为 false，isSealed 为 true，isFrozen 为 false
- * - 状态`frozen`: isExtensible 为 false，isSealed 和 isFrozen 为 true
+ * - 状态`[[extensible]] === true`: isExtensible 为 true
+ * - 状态`[[sealed]] === true`: isExtensible 为 false，isSealed 为 true，isFrozen 为 false
+ * - 状态`[[frozen]] === true`: isExtensible 为 false，isSealed 和 isFrozen 为 true
  */
 
 describe("实例状态的检测方法", () => {
   
-  test("state:extensible", () => {
+  test("[[extensible]] === true", () => {
     const object = { k: "v" };
     expect(isExtensible(object)).toBeTruthy();
     expect(isSealed(object)).not.toBeTruthy();
     expect(isFrozen(object)).not.toBeTruthy();
   });
   
-  test("state:non-ext", () => {
+  test("[[extensible]] === false", () => {
     const object = { k: "v" };
     preventExtensions(object);
     expect(isExtensible(object)).not.toBeTruthy();
@@ -32,7 +31,7 @@ describe("实例状态的检测方法", () => {
     expect(isFrozen(object)).not.toBeTruthy();
   });
   
-  test("state:sealed", () => {
+  test("[[sealed]] === true", () => {
     const object = { k: "v" };
     seal(object);
     expect(isExtensible(object)).not.toBeTruthy();
@@ -40,7 +39,7 @@ describe("实例状态的检测方法", () => {
     expect(isFrozen(object)).not.toBeTruthy();
   });
   
-  test("state:frozen", () => {
+  test("[[frozen]] === true", () => {
     const object = { k: "v" };
     freeze(object);
     expect(isExtensible(object)).not.toBeTruthy();
@@ -51,39 +50,43 @@ describe("实例状态的检测方法", () => {
 
 /**
  * 实验目标
- * - 了解每种实例状态的特性
+ * - 实例内部属性决定了属性描述符
  * 实验结论
- * - 状态`extensible`: 默认态，允许在实例上添加新属性
- * - 状态`non-ext`: 阻止在实例上添加新属性，不改变存量属性们的属性描述符
- * - 状态`sealed`: 阻止在实例上添加新属性，修改存量属性们的 configurable 为 false，
- * - 状态`frozen`: 阻止在实例上添加新属性,修改存量属性们的 configurable 和 writable 为 false，
+ * - 状态`[[extensible]] === true`: 默认态，允许在实例上添加新属性
+ * - 状态`[[extensible]] === false`: 阻止在实例上添加新属性，不改变存量属性们的属性描述符
+ * - 状态`[[sealed]] === true`: 阻止在实例上添加新属性，修改存量属性们的 configurable 为 false，
+ * - 状态`[[frozen]] === true`: 阻止在实例上添加新属性,修改存量属性们的 configurable 和 writable 为 false，
  */
 describe("实例状态的属性标识符", () => {
   
-  test("state:extensible", () => {
+  test("[[extensible]] === true", () => {
     const object = { k: "v" };
     const propDescriptor = getOwnPropertyDescriptor(object, "k");
-    expect(propDescriptor).toMatchObject({configurable: true, writable: true,});
+    const assert = {configurable: true, writable: true,};
+    expect(propDescriptor).toMatchObject(assert);
   });
   
-  test("state:non-ext", () => {
+  test("[[extensible]] === false", () => {
     const object = { k: "v" };
     preventExtensions(object);
     const propDescriptor = getOwnPropertyDescriptor(object, "k");
-    expect(propDescriptor).toMatchObject({configurable: true, writable: true,});
+    const assert = {configurable: true, writable: true,};
+    expect(propDescriptor).toMatchObject(assert);
   });
   
-  test("state:sealed", () => {
+  test("[[sealed]] === true", () => {
     const object = { k: "v" };
     seal(object);
     const propDescriptor = getOwnPropertyDescriptor(object, "k");
-    expect(propDescriptor).toMatchObject({configurable: false, writable: true,});
+    const assert = {configurable: false, writable: true,};
+    expect(propDescriptor).toMatchObject(assert);
   });
   
-  test("state:frozen", () => {
+  test("[[frozen]] === true", () => {
     const object = { k: "v" };
     freeze(object);
     const propDescriptor = getOwnPropertyDescriptor(object, "k");
-    expect(propDescriptor).toMatchObject({configurable: false, writable: false,});
+    const assert = {configurable: false, writable: false,};
+    expect(propDescriptor).toMatchObject(assert);
   });
 });
